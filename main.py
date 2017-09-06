@@ -19,8 +19,12 @@ def main():
     for record in record_list['data']:
         if record['host'] != HOST:
             continue
-        xns.record_update(record['record_id'], DOMAIN_ID, HOST, my_ip(), ttl= 60)
-        print('DNS updated')
+        current = my_ip()
+        if record['value'] != current:
+            xns.record_update(record['record_id'], DOMAIN_ID, HOST, my_ip(), ttl= 60)
+            print('DNS updated')
+        else:
+            print('Same with original')
 
 if __name__ == '__main__':
     main()
